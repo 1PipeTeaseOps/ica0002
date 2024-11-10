@@ -10,6 +10,7 @@
     roles:
       - nginx
     become: yes
+    
   - name: Web Server
     hosts: web_servers
     roles:
