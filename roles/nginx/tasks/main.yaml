@@ -1,4 +1,12 @@
----
-  - name: install nginx
-    ansible.builtin.apt:
+- name: install nginx
+  ansible.builtin.apt:
       name: nginx
+      allow_downgrade: yes
+      state: latest
+      update_cache: yes
+
+- name: Replace Nginx index page
+  ansible.builtin.copy:
+    src: default
+    dest: /etc/nginx/sites-enabled/default
+  notify: Restart Nginx
