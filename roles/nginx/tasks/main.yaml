@@ -6,5 +6,8 @@
 - name: Configure Nginx as a reverse proxy for uWSGI
   ansible.builtin.copy:
     src: default
+    mode: '0644'
     dest: /etc/nginx/sites-enabled/default
-  notify: restart nginx
+
+  notify: 
+    - restart nginx

@@ -16,4 +16,5 @@
     roles:
       - nginx
       - agama
+      - uwsgi
     become: yes

@@ -1,21 +1,24 @@
-- name: install uwsgi package
-  ansible.builtin.apt:
-    name:
-      - uwsgi
-      - uwsgi-plugin-python3
+- name: Install uWSGI
+  apt:
+    name: uwsgi
     state: present
 
-- name: Configure host uwsgi
-  ansible.builtin.template:
+- name: Install Dependencies
+  apt:
+    name: uwsgi-plugin-python3
+    state: present      
+
+- name: Template uWSGI config
+  template:
     src: ../files/agama.ini
     dest: /etc/uwsgi/apps-enabled/agama.ini
     owner: agama
-    mode: '0600'
-  
+    mode: 0600
+  no_log: true
   notify: restart uwsgi
 
-- name: run uwsgi service
-  ansible.builtin.service:
+- name: Enable and start uWSGI service
+  service:
     name: uwsgi
     state: started
     enabled: true
