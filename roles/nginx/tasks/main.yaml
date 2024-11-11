@@ -1,12 +1,10 @@
-- name: install nginx
+- name: Install nginx
   ansible.builtin.apt:
       name: nginx
-      allow_downgrade: yes
-      state: latest
-      update_cache: yes
+      state: present
 
-- name: Replace Nginx index page
+- name: Configure Nginx as a reverse proxy for uWSGI
   ansible.builtin.copy:
     src: default
     dest: /etc/nginx/sites-enabled/default
-  notify: Restart Nginx
+  notify: restart nginx
