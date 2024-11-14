@@ -10,11 +10,11 @@
 
 - name: Template uWSGI config
   template:
-    src: ../files/agama.ini
+    src: ../templates/agama.ini.j2
     dest: /etc/uwsgi/apps-enabled/agama.ini
     owner: agama
     mode: 0600
-  no_log: true
+    nolog: true
   notify: restart uwsgi
 
 - name: Enable and start uWSGI service
