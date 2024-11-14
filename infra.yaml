@@ -4,12 +4,13 @@
     roles:
       - init
     become: yes
-  
-  - name: Install Nginx
-    hosts: all
-    roles:
-      - nginx
+
+  - name: Database Server
+    hosts: db_servers
+    roles: 
+      - mysql
     become: yes
+    tags: db
     
   - name: Web Server
     hosts: web_servers
@@ -18,10 +19,3 @@
       - uwsgi
       - nginx
     become: yes
-
-  - name: Database Server
-    hosts: db_servers
-    roles:
-     - mysql
-    become: yes
-    tags: db
