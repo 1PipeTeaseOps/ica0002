@@ -5,17 +5,44 @@
       - init
     become: yes
 
-  - name: Database Server
+  - name: Configure DNS Server
+    hosts: dns_servers
+    roles:
+      - bind
+    become: yes
+    tags: bind
+
+  - name: Configure DNS Client
+    hosts: all
+    roles:
+      - config-dns
+    become: yes
+    tags: dns
+
+  - name: Configure Database Server
     hosts: db_servers
     roles: 
       - mysql
     become: yes
     tags: db
     
-  - name: Web Server
+  - name: Configure Agama
     hosts: web_servers
     roles:
       - agama
+    become: yes
+    tags: agama
+
+  - name: Configure uWSGI
+    hosts: web_servers
+    roles:
       - uwsgi
+    become: yes
+    tags: uwsgi
+
+  - name: Configure Nginx
+    hosts: web_servers
+    roles:
       - nginx
     become: yes
+    tags: nginx

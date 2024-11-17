@@ -1,0 +1,12 @@
+$TTL    604800
+@       IN      SOA     ns1.{{ domain_name }}. admin.{{ domain_name }}. (
+                            2         ; Serial
+                            604800    ; Refresh
+                            86400     ; Retry
+                            2419200   ; Expire
+                            604800 )  ; Negative Cache TTL
+
+@       IN      NS      ns1.{{ domain_name }}.
+
+{{ hostvars['1PipeTeaseOps-1']['ansible_default_ipv4']['address'].split('.')[3] }} IN PTR 1PipeTeaseOps-1.{{ domain_name }}.
+{{ hostvars['1PipeTeaseOps-2']['ansible_default_ipv4']['address'].split('.')[3] }} IN PTR 1PipeTeaseOps-2.{{ domain_name }}.

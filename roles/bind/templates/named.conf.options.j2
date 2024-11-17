@@ -1,0 +1,15 @@
+acl allowed_nets { {{ localnet }}; {{ localhost }}; };
+
+options {
+    directory "/var/cache/bind";
+
+    forwarders {
+    {% for forwarder in forwarders_list %}
+        {{ forwarder }};
+    {% endfor %}
+    };
+
+    allow-query { allowed_nets; };
+    dnssec-validation auto;
+};
+
