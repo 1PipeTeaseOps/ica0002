@@ -1,0 +1,5 @@
+# Memory consumption (%)
+100 * (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes
+
+# Average CPU load
+avg(node_load1)

@@ -19,6 +19,13 @@
     become: yes
     tags: dns
 
+  - name: Prometheus Server
+    hosts: prometheus_servers
+    roles:
+    - prometheus
+    become: yes
+    tags: prometheus
+
   - name: Configure Database Server
     hosts: db_servers
     roles: 
@@ -41,7 +48,7 @@
     tags: uwsgi
 
   - name: Configure Nginx
-    hosts: web_servers
+    hosts: nginx_servers
     roles:
       - nginx
     become: yes

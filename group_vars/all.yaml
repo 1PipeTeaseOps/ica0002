@@ -1,4 +1,4 @@
-mysql_host: 1PipeTeaseOps-2.jasonfong.io
+mysql_host: 1PipeTeaseOps-2
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -43,3 +43,9 @@ dns_transfer_secret: !vault |
 
 # Default Nameserver for /etc/resolv.conf
 default_nameserver: 192.168.42.20
+
+public_url: "http://{{ ansible_host }}:{{ ansible_port | int // 100 }}80"
+prometheus_port: 9090
+prometheus_exporters:
+  node:
+    port: 9100
