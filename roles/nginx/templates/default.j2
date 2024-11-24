@@ -1,37 +1,30 @@
-{% if inventory_hostname in groups['web_servers'] %}
 server {
     listen 80 default_server;
-    listen {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:{{ web_server_port | default(inventory_hostname[-1] ~ '80') }};  # Dynamically set IP and port ending with '80'
-    server_name localhost {{ inventory_hostname }} {{ ansible_default_ipv4.address }} _;
+    server_name _;
 
-    # Root configuration
+    {% if inventory_hostname in groups['web_servers'] %}
     location / {
         uwsgi_pass localhost:5000;
         include uwsgi_params;
     }
+    {% endif %}
 
-    # Redirect /prometheus without trailing slash to /prometheus/
-    location = /prometheus {
-        return 301 /prometheus/;
+    {% if inventory_hostname in groups['prometheus_servers'] %}
+    location / {
+        deny all;
     }
-
-    # Prometheus forwarding configuration
-    location /prometheus/ {
-        proxy_pass http://{{ groups['prometheus_servers'][0] }}:9090/prometheus/;  # Ensure trailing slash for correct path forwarding
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        add_header Access-Control-Allow-Origin *;
-        add_header Access-Control-Allow-Methods "GET, OPTIONS";
+    
+    location /prometheus {
+        proxy_pass http://localhost:9090;   # Forward to Prometheus base URL
+        proxy_set_header Host $host:$server_port;        # Pass original host header
     }
+    {% endif %}
 }
-{% endif %}
 
 server {
     listen 8080 default_server;
 
-    location = /stub_status {
+    location /stub_status {
         stub_status;
     }
 }

@@ -44,7 +44,8 @@ dns_transfer_secret: !vault |
 # Default Nameserver for /etc/resolv.conf
 default_nameserver: 192.168.42.20
 
-public_url: "http://{{ ansible_host }}:{{ ansible_port | int // 100 }}80"
+
+public_url: "http://{{ ansible_host }}:{{ (ansible_port // 100) * 100 + 80 }}"
 prometheus_port: 9090
 prometheus_exporters:
   node:
