@@ -10,3 +10,4 @@ $TTL    604800
 
 {{ hostvars['1PipeTeaseOps-1']['ansible_default_ipv4']['address'].split('.')[3] }} IN PTR 1PipeTeaseOps-1.{{ domain_name }}.
 {{ hostvars['1PipeTeaseOps-2']['ansible_default_ipv4']['address'].split('.')[3] }} IN PTR 1PipeTeaseOps-2.{{ domain_name }}.
+{{ hostvars['1PipeTeaseOps-2']['ansible_default_ipv4']['address'].split('.')[3] }} IN PTR prometheus.{{ domain_name }}.

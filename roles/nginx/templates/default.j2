@@ -10,13 +10,20 @@ server {
     {% endif %}
 
     {% if inventory_hostname in groups['prometheus_servers'] %}
-    location / {
+    location = / {
         deny all;
+    }
+
+    # Redirect /prometheus to /prometheus/classic/graph with port number
+    location = /prometheus {
+    return 301 http://$http_host/prometheus/classic/graph;
     }
     
     location /prometheus {
         proxy_pass http://localhost:9090;   # Forward to Prometheus base URL
-        proxy_set_header Host $host:$server_port;        # Pass original host header
+        proxy_set_header Host $http_host;        # Pass original host header
+        add_header X-Debug-Host $host:$server_port;
+        add_header X-Debug-Origin $http_host;
     }
     {% endif %}
 }
