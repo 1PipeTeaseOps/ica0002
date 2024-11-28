@@ -17,3 +17,8 @@ scrape_configs:
 {% for vm in groups['all'] %}
         - {{ vm }}:{{ prometheus_exporters['node']['port'] | default(9100) }}
 {% endfor %}
+
+  - job_name: mysql_exporter
+
+  
+  
