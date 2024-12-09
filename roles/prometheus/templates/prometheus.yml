@@ -1,0 +1,45 @@
+global:
+  scrape_interval: 15s 
+  evaluation_interval: 15s 
+
+scrape_configs:
+ # Scrape Prometheus server metrics
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    metrics_path: /prometheus/metrics  # Default Prometheus metrics path
+    
+    static_configs:
+      - targets: ['localhost:9090']  # Assuming Prometheus runs on port 9090
+
+  # Scrape Node Exporter (Linux metrics)
+  - job_name: 'linux'
+    static_configs:
+      - targets:
+{% for vm in groups['all'] %}
+        - {{ vm }}:{{ prometheus_exporters['node']['port'] | default(9100) }}
+{% endfor %}
+
+  # Scrape MySQL Exporter metrics
+  - job_name: 'mysql'
+    static_configs:
+      - targets:
+{% for vm in groups['db_servers'] %}
+        - {{ hostvars[vm]['ansible_default_ipv4']['address'] }}:9104
+{% endfor %}
+
+ # Scrape Bind Exporter metrics
+  - job_name: 'bind'
+    static_configs:
+      - targets:
+{% for vm in groups['dns_servers'] %}
+        - {{ hostvars[vm]['ansible_default_ipv4']['address'] }}:9119
+{% endfor %}
+
+ # Scrape Nginx Exporter metrics
+  - job_name: 'nginx'
+    static_configs:
+      - targets:
+{% for vm in groups['nginx_servers'] %}
+        - {{ hostvars[vm]['ansible_default_ipv4']['address'] }}:9113
+{% endfor %}

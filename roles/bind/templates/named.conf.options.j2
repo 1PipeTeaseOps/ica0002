@@ -14,3 +14,6 @@ options {
 };
 
 
+statistics-channels {
+    inet {{ ansible_default_ipv4.address }} port 8053 allow { localhost; };
+};

@@ -4,7 +4,6 @@
       - nginx
       - prometheus-nginx-exporter
       state: present
-  become: yes
 
 - name: Template Nginx Config
   ansible.builtin.template:
@@ -13,13 +12,14 @@
       mode: '0644'
   notify: 
     - Restart Nginx
-  become: yes
-
+    - Restart Nginx Exporter
 
 - name: Enable and Start Nginx Service
   service:
-    name: nginx
+    name: "{{ item }}"
     state: started
     enabled: true
-  become: yes
+  loop:
+    - nginx
+    - prometheus-nginx-exporter
 

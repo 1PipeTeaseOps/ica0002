@@ -53,3 +53,10 @@
       - nginx
     become: yes
     tags: nginx
+
+  - name: Grafana Server
+    hosts: grafana_servers
+    roles:  
+      - grafana
+    become: yes
+    tags: grafana

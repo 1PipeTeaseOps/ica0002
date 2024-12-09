@@ -1,12 +1,15 @@
 [all]
-1PipeTeaseOps-1 ansible_host=193.40.156.67 ansible_port=41822 ansible_user=ubuntu ansible_python_interpreter=/usr/bin/python3
-1PipeTeaseOps-2 ansible_host=193.40.156.67 ansible_port=28522 ansible_user=ubuntu ansible_python_interpreter=/usr/bin/python3
+1PipeTeaseOps-1 ansible_host=193.40.156.67 ansible_port=10322 ansible_user=ubuntu ansible_python_interpreter=/usr/bin/python3
+1PipeTeaseOps-2 ansible_host=193.40.156.67 ansible_port=1722 ansible_user=ubuntu ansible_python_interpreter=/usr/bin/python3
 
 
 [db_servers]
 1PipeTeaseOps-2
 
 [prometheus_servers]
+1PipeTeaseOps-2
+
+[grafana_servers]
 1PipeTeaseOps-2
 
 [web_servers]
