@@ -4,7 +4,7 @@
     name: nginx
     state: restarted
 
-- name: Restart Nginx Exporter
-  service:
-    name: prometheus-nginx-exporter
-    state: restarted
+#- name: Restart Nginx Exporter
+#  service:
+#    name: prometheus-nginx-exporter
+#    state: restarted

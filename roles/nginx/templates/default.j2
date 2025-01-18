@@ -2,48 +2,8 @@ server {
     listen 80 default_server;
     server_name _;
 
-    {% if inventory_hostname in groups['web_servers'] %}
     location / {
         uwsgi_pass localhost:5000;
         include uwsgi_params;
-    }
-    {% endif %}
-
-    {% if inventory_hostname in groups['prometheus_servers'] %}
-    location = / {
-        deny all;
-    }
-
-    # Redirect /prometheus to /prometheus/classic/graph with port number
-    location = /prometheus {
-    return 301 http://$http_host/prometheus/classic/graph;
-    }
-    
-    location /prometheus {
-        proxy_pass http://localhost:9090;   # Forward to Prometheus base URL
-        proxy_set_header Host $http_host;        # Pass original host header
-        add_header X-Debug-Host $host:$server_port;
-        add_header X-Debug-Origin $http_host;
-    }
-    {% endif %}
-
-    {% if inventory_hostname in groups['grafana_servers'] %}
-    location /grafana {
-        proxy_pass http://localhost:3000;  # Forward to Grafana
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-    {% endif %}
-}
-
-server {
-    listen 8080 default_server;
-
-    location /stub_status {
-        stub_status;
-        allow 127.0.0.1;  # Allow only localhost
-        deny all;         # Deny other IPs
     }
 }

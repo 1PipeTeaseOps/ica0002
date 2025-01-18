@@ -1,3 +1,0 @@
-# Prometheus startup arguments
-ARGS="--web.external-url={{ public_url }}/prometheus" 
-

@@ -1,8 +1,0 @@
-- name: Restart Bind9
-  service:
-    name: bind9
-    state: restarted
-
-- name: Reload systemd
-  ansible.builtin.systemd_service:
-    daemon_reload: true

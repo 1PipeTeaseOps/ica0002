@@ -4,59 +4,23 @@
     roles:
       - init
     become: yes
-
-  - name: Configure DNS Server
-    hosts: dns_servers
+  
+#  - name: Install Nginx
+#    hosts: all
+#    roles:
+#      - nginx
+#    become: yes
+    
+  - name: Web Server
+    hosts: web_servers
     roles:
-      - bind
+       - agama
+       - uwsgi
+       - nginx
     become: yes
-    tags: bind
 
-  - name: Configure DNS Client
-    hosts: all
-    roles:
-      - config-dns
-    become: yes
-    tags: dns
-
-  - name: Prometheus Server
-    hosts: prometheus_servers
-    roles:
-    - prometheus
-    become: yes
-    tags: prometheus
-
-  - name: Configure Database Server
+  - name: MSQL Server
     hosts: db_servers
     roles: 
-      - mysql
-    become: yes
+       - mysql
     tags: db
-    
-  - name: Configure Agama
-    hosts: web_servers
-    roles:
-      - agama
-    become: yes
-    tags: agama
-
-  - name: Configure uWSGI
-    hosts: web_servers
-    roles:
-      - uwsgi
-    become: yes
-    tags: uwsgi
-
-  - name: Configure Nginx
-    hosts: nginx_servers
-    roles:
-      - nginx
-    become: yes
-    tags: nginx
-
-  - name: Grafana Server
-    hosts: grafana_servers
-    roles:  
-      - grafana
-    become: yes
-    tags: grafana

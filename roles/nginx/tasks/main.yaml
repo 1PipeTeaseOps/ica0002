@@ -2,7 +2,7 @@
   ansible.builtin.apt:
       name:
       - nginx
-      - prometheus-nginx-exporter
+#      - prometheus-nginx-exporter
       state: present
 
 - name: Template Nginx Config
@@ -12,14 +12,14 @@
       mode: '0644'
   notify: 
     - Restart Nginx
-    - Restart Nginx Exporter
+#    - Restart Nginx Exporter
 
-- name: Enable and Start Nginx Service
-  service:
-    name: "{{ item }}"
-    state: started
-    enabled: true
-  loop:
-    - nginx
-    - prometheus-nginx-exporter
+#- name: Enable and Start Nginx Service
+#  service:
+#    name: "{{ item }}"
+#    state: started
+#    enabled: true
+#  loop:
+#    - nginx
+#    - prometheus-nginx-exporter
 
