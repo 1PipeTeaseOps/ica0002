@@ -2,8 +2,28 @@ server {
     listen 80 default_server;
     server_name _;
 
+    {% if inventory_hostname in groups['web_servers'] %}
     location / {
         uwsgi_pass localhost:5000;
         include uwsgi_params;
+    }
+    {% endif %}
+
+    {% if inventory_hostname in groups['prometheus_servers'] %}
+	location / {
+		deny all;
+	}
+	location /prometheus {
+		proxy_pass http://localhost:9090/prometheus;
+	}
+    {% endif %}
+
+}
+
+server {
+    listen 8080 default_server;
+
+    location /stub_status {
+        stub_status;
     }
 }

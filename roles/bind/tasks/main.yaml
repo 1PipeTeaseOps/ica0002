@@ -1,0 +1,52 @@
+- name: Install Bind9
+  apt:
+    name: bind9
+    state: present
+
+- name: Template named.conf.options
+  template:
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
+  notify: Restart Bind9
+
+- name: Template named.conf.local
+  template:
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+  notify: Restart Bind9
+
+- name: Template forward zone file
+  template:
+    src: db.forward.j2
+    dest: /var/cache/bind/db.{{ domain_name }}
+  notify: Restart Bind9
+
+- name: Template reverse zone file
+  template:
+    src: db.reverse.j2
+    dest: /var/cache/bind/db.{{ reverse_domain_name }}
+  notify: Restart Bind9
+
+- name: Validate Bind9 Configuration
+  command: named-checkconf
+  register: checkconf
+  changed_when: false
+  failed_when: checkconf.rc != 0
+
+- name: Validate Forward Zone
+  command: named-checkzone {{ domain_name }} /var/cache/bind/db.{{ domain_name }}
+  register: forward_zone_check
+  changed_when: false
+  failed_when: forward_zone_check.rc != 0
+
+- name: Validate Reverse Zone
+  command: named-checkzone {{ reverse_domain_name }} /var/cache/bind/db.{{ reverse_domain_name }}
+  register: reverse_zone_check
+  changed_when: false
+  failed_when: reverse_zone_check.rc != 0
+
+- name: Ensure Bind9 is running and enabled
+  service:
+    name: bind9
+    state: started
+    enabled: true
