@@ -14,3 +14,4 @@ ns1     IN      A       {{ hostvars['1PipeTeaseOps-2']['ansible_default_ipv4']['
 1PipeTeaseOps-2 IN      A       {{ hostvars['1PipeTeaseOps-2']['ansible_default_ipv4']['address'] }}
 
 prometheus  IN  A  {{ hostvars['1PipeTeaseOps-2']['ansible_default_ipv4']['address'] }}
+backup IN A {{ backup_server_ip }}

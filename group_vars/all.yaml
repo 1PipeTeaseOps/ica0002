@@ -44,6 +44,15 @@ dns_transfer_secret: !vault |
 # Default Nameserver for /etc/resolv.conf
 default_nameserver: 192.168.42.20
 
+#A record
+a_records:
+  - backup: 192.168.42.132
+  - google: 8.8.8.8
+#Backup
+backup_server_ip: 192.168.42.132
+backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
+
+
 mysql_exporter_user: exporter
 mysql_exporter_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256

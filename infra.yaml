@@ -4,6 +4,7 @@
     roles:
       - init
     become: yes
+    tags: init
   
   - name: Configure DNS Server
     hosts: dns_servers

@@ -19,7 +19,10 @@
   template:
     src: db.forward.j2
     dest: /var/cache/bind/db.{{ domain_name }}
-  notify: Restart Bind9
+  notify:
+     - Restart Bind9
+     - RNDC Reload
+ 
 
 - name: Template reverse zone file
   template:
@@ -71,7 +74,7 @@
 
 - name: Copy bind_exporter systemd service file
   template:
-    src: prometheus_bind_exporter.service.j2
+    src: bind_exporter.service.j2
     dest: /etc/systemd/system/prometheus-bind-exporter.service
   notify:
     - Reload systemd
