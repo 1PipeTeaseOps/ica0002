@@ -14,12 +14,15 @@
     - Restart Nginx
     - Restart Nginx Exporter
 
-- name: Enable and Start Nginx Service
-  service:
-    name: "{{ item }}"
+- name: Ensure Nginx is running and enabled on startup
+  ansible.builtin.service:
+    name: nginx
     state: started
     enabled: true
-  loop:
-    - nginx
-    - prometheus-nginx-exporter
+
+- name: Enable prometheus nginx exporter
+  ansible.builtin.service:
+    name: prometheus-nginx-exporter
+    state: started
+    enabled: true
 

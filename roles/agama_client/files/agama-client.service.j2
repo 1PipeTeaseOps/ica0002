@@ -1,0 +1,13 @@
+[Unit]
+Description=agama-client service
+Documentation=https://github.com/romankuchin/ica0002-2024/tree/main/08-logging
+After=network-online.target
+
+[Service]
+User=agama-client
+ExecStart=/usr/local/bin/agama-client
+Restart=always
+RestartSec=10s 
+
+[Install]
+WantedBy=multi-user.target

@@ -47,12 +47,13 @@
     become: yes
     tags: uwsgi
 
-  - name: Configure Nginx
-    hosts: nginx_servers
-    roles:
-      - nginx
+  - name: Influxdb
+    hosts: influxdb_servers
     become: yes
-    tags: nginx
+    roles:  
+      - influxdb
+    tags:
+      - influxdb
 
   - name: Grafana Server
     hosts: grafana_servers
@@ -60,3 +61,10 @@
       - grafana
     become: yes
     tags: grafana
+
+  - name: Configure Nginx
+    hosts: nginx_servers
+    roles:
+      - nginx
+    become: yes
+    tags: nginx

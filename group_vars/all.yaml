@@ -63,4 +63,16 @@ grafana_admin_password: !vault |
           6365
 
 grafana_port: 3000
+agama_port: 8001
 prometheus_port: 9090
+
+
+
+influxdb_port: 8086
+
+#Agama client
+agac_db_url: http://influxdb.jasonfong.io:{{ influxdb_port }}
+agac_db_name: agama_client
+
+#telegram
+telegraf_db_url: http://influxdb.jasonfong.io:{{ influxdb_port }}
